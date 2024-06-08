@@ -2,12 +2,9 @@ package qrcodeapi.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import qrcodeapi.service.QRCodeResponse;
 import qrcodeapi.service.QRCodeService;
 
 import java.awt.image.BufferedImage;
@@ -23,17 +20,15 @@ public class QRCodeController {
 
     @GetMapping("/health")
     @ResponseStatus(HttpStatus.OK)
-    public String health() {
-        return null;
-    }
+    public void health() { }
 
     // Retrieve QR code images
     @GetMapping("/qrcode")
-    public ResponseEntity<BufferedImage> qrcode() throws IOException {
-        BufferedImage image = qrCodeService.getQrCodeImage();
+    public ResponseEntity<BufferedImage> qrcode(@RequestParam int size, @RequestParam String type) throws IOException {
+        QRCodeResponse image = qrCodeService.getQrCodeImage(size, type);
         return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_PNG)
-                .body(image);
+                .contentType(image.mediaType())
+                .body(image.image());
     }
 
 }
