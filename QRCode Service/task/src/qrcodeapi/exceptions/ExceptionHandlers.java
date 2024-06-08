@@ -10,7 +10,7 @@ import static qrcodeapi.exceptions.CustomExceptions.*;
 @ControllerAdvice
 public class ExceptionHandlers {
 
-    @ExceptionHandler({ImageSizeOutOfBoundsException.class, ImageTypeNotSupportedException.class})
+    @ExceptionHandler(QRImageRequestException.class)
     public ResponseEntity<ErrorResponse> handle(ResponseStatusException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(new ErrorResponse(ex.getReason()));
     }

@@ -24,8 +24,11 @@ public class QRCodeController {
 
     // Retrieve QR code images
     @GetMapping("/qrcode")
-    public ResponseEntity<BufferedImage> qrcode(@RequestParam int size, @RequestParam String type) throws IOException {
-        QRCodeResponse image = qrCodeService.getQrCodeImage(size, type);
+    public ResponseEntity<BufferedImage> qrcode(
+            @RequestParam String contents,
+            @RequestParam int size,
+            @RequestParam String type) {
+        QRCodeResponse image = qrCodeService.getQrCodeImage(contents, size, type);
         return ResponseEntity.ok()
                 .contentType(image.mediaType())
                 .body(image.image());
