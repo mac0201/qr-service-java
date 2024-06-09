@@ -1,5 +1,6 @@
 package qrcodeapi;
 
+import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.BufferedImageHttpMessageConverter;
@@ -13,6 +14,11 @@ public class Config {
     @Bean
     public HttpMessageConverter<BufferedImage> createImageHttpMessageConverter() {
         return new BufferedImageHttpMessageConverter();
+    }
+
+    @Bean
+    public QRCodeWriter qrCodeWriter() {
+        return new QRCodeWriter();
     }
 
 }

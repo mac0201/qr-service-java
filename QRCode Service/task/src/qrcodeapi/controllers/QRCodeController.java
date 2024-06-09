@@ -8,7 +8,6 @@ import qrcodeapi.service.QRCodeResponse;
 import qrcodeapi.service.QRCodeService;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
@@ -26,9 +25,11 @@ public class QRCodeController {
     @GetMapping("/qrcode")
     public ResponseEntity<BufferedImage> qrcode(
             @RequestParam String contents,
-            @RequestParam int size,
-            @RequestParam String type) {
-        QRCodeResponse image = qrCodeService.getQrCodeImage(contents, size, type);
+            @RequestParam(required = false) Integer size,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String correction) {
+        // All validation performed by the service
+        QRCodeResponse image = qrCodeService.getQrCodeImage(contents, size, type, correction);
         return ResponseEntity.ok()
                 .contentType(image.mediaType())
                 .body(image.image());
